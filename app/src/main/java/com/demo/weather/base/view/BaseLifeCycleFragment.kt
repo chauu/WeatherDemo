@@ -16,7 +16,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
     protected lateinit var mViewModel: VM
     override fun initView() {
-        showLoading()
+//        showLoading()
         mViewModel = ViewModelProvider(this).get(Utils.getClass(this))
         mViewModel.loadState.observe(this, observer)
         initDataObserver()
@@ -24,15 +24,15 @@ abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>> : BaseFragment() {
 
     abstract fun initDataObserver()
 
-    private fun showLoading() {
+    open fun showLoading() {
         loadService.showCallback(LoadingCallBack::class.java)
     }
 
-    private fun showSuccess() {
+    open fun showSuccess() {
         loadService.showCallback(SuccessCallback::class.java)
     }
 
-    private fun showError(msg: String) {
+    open fun showError(msg: String) {
         if (!TextUtils.isEmpty(msg)) {
             Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
         }
