@@ -1,12 +1,16 @@
 package com.demo.weather.module.searchplace.view
 
+import android.os.Bundle
 import android.view.View
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.weather.R
 import com.demo.weather.base.view.BaseLifeCycleFragment
 import com.demo.weather.databinding.SearchPlaceFragmentBinding
+import com.demo.weather.module.chooseplace.model.Place
 import com.demo.weather.module.searchplace.adapter.SearchPlaceAdapter
 import com.demo.weather.module.searchplace.viewmodel.SearchPlaceViewModel
 import kotlinx.android.synthetic.main.custom_bar.view.*
@@ -18,19 +22,10 @@ class SearchPlaceFragment : BaseLifeCycleFragment<SearchPlaceViewModel, SearchPl
 
     override fun getLayoutId(): Int = R.layout.search_place_fragment
 
-    private val mPlaceList = arrayListOf(
-        "a","b","c","d"
-    )
-
     override fun initView() {
         super.initView()
         initAdapter()
         initHeaderView()
-    }
-
-    override fun initData() {
-        super.initData()
-        setPlaceList(mPlaceList)
     }
 
     private fun initAdapter(){
@@ -51,12 +46,37 @@ class SearchPlaceFragment : BaseLifeCycleFragment<SearchPlaceViewModel, SearchPl
         }
     }
 
-    private fun setPlaceList(placeList: List<String>) {
-        if(placeList.isEmpty()){
-            mAdapter.loadMoreEnd()
-            return
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        initSearch()
+    }
+
+    private fun initSearch(){
+        search_place_edit.addTextChangedListener { editable ->
+            val content = editable.toString()
+            if(content.isNotEmpty()){
+                mViewModel.searchPlaces(content)
+                place_recycle.visibility = View.VISIBLE
+            } else {
+                place_recycle.visibility = View.GONE
+                mViewModel.mSearchPlacesDate.value = null
+                setPlaceList(arrayListOf())
+                mAdapter.notifyDataSetChanged()
+            }
         }
-        mAdapter.addData(placeList)
+    }
+
+    override fun initDataObserver() {
+        super.initDataObserver()
+        mViewModel.mSearchPlacesDate.observe(this, Observer {
+            it?.let {
+                setPlaceList(it.places)
+            }
+        })
+    }
+
+    private fun setPlaceList(placeList: List<Place>) {
+        mAdapter.setNewData(placeList)
         mAdapter.loadMoreComplete()
     }
 }

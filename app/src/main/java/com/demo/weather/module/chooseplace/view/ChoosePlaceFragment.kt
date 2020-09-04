@@ -26,11 +26,6 @@ class ChoosePlaceFragment : BaseLifeCycleFragment<ChoosePlaceViewModel, Fragment
 
     override fun getLayoutId(): Int = R.layout.fragment_list
 
-    override fun initData() {
-        super.initData()
-        setPlaceList(mPlaceList)
-    }
-
     override fun initView() {
         super.initView()
         showSuccess()

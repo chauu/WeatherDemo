@@ -18,6 +18,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 abstract class BaseLifeCycleFragment<VM : BaseViewModel<*>, DB : ViewDataBinding> : BaseFragment<VM, DB>() {
 
     override fun initView() {
+        showLoading()
         showSuccess()
         mViewModel.loadState.observe(this, observer)
         initDataObserver()

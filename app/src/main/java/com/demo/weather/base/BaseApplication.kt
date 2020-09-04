@@ -6,7 +6,7 @@ import com.demo.weather.common.callback.ErrorCallBack
 import com.demo.weather.common.callback.LoadingCallBack
 import com.kingja.loadsir.core.LoadSir
 
-class BaseApplication : Application() {
+open class BaseApplication : Application() {
     companion object {
         lateinit var instance : BaseApplication
     }
