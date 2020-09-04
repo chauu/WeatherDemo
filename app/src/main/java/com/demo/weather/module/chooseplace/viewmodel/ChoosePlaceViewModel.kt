@@ -1,4 +1,4 @@
-package com.demo.weather.module.place.viewmodel
+package com.demo.weather.module.chooseplace.viewmodel
 
 import android.app.Application
 import com.demo.weather.base.viewmodel.BaseViewModel

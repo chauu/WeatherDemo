@@ -1,14 +1,9 @@
 package com.demo.weather.module.main
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 import com.demo.weather.R
 import com.demo.weather.base.view.BaseLifeCycleActivity
+import com.demo.weather.databinding.ActivityMainBinding
 
-class MainActivity : BaseLifeCycleActivity<MainViewModel>(){
+class MainActivity : BaseLifeCycleActivity<MainViewModel, ActivityMainBinding>(){
     override fun getLayoutId(): Int = R.layout.activity_main
-
-    override fun initView() {
-        super.initView()
-    }
 }

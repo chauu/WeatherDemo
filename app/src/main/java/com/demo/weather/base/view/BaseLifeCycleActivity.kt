@@ -2,6 +2,7 @@ package com.demo.weather.base.view
 
 import android.text.TextUtils
 import android.widget.Toast
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.demo.weather.base.viewmodel.BaseViewModel
@@ -13,12 +14,10 @@ import com.demo.weather.common.state.State
 import com.demo.weather.common.state.StateType
 import com.kingja.loadsir.callback.SuccessCallback
 
-abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>> : BaseActivity(){
-    protected lateinit var mViewModel: VM
+abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>, DB : ViewDataBinding> : BaseActivity<VM, DB>(){
 
     override fun initView() {
-//        showLoading()
-        mViewModel = ViewModelProvider(this).get(Utils.getClass(this))
+        showSuccess()
         mViewModel.loadState.observe(this, observer)
         initDataObserver()
     }

@@ -1,4 +1,4 @@
-package com.demo.weather.module.place.model
+package com.demo.weather.module.chooseplace.model
 
 import com.google.gson.annotations.SerializedName
 

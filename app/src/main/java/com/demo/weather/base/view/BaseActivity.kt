@@ -9,16 +9,21 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.ColorUtils
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModelProvider
 import com.demo.weather.R
+import com.demo.weather.base.viewmodel.BaseViewModel
 import com.demo.weather.common.AppManager
 import com.demo.weather.common.Utils
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<VM : BaseViewModel<*>, DB : ViewDataBinding> : AppCompatActivity() {
     private var mExitTime : Long = 0
 
-    lateinit var mRootView : View
+    protected lateinit var mViewModel: VM
+    protected lateinit var mDataBinding: DB
 
     open fun initView(){}
 
@@ -30,9 +35,10 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
-        mRootView = (findViewById(android.R.id.content) as ViewGroup).getChildAt(0)
+        mDataBinding = DataBindingUtil.setContentView(this, getLayoutId())
+        mDataBinding.lifecycleOwner = this
         AppManager.instance.addActivity(this)
+        mViewModel = ViewModelProvider(this).get(Utils.getClass(this))
         initView()
         initData()
     }

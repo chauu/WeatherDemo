@@ -4,15 +4,15 @@
     android:id="@+id/custom_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/always_white_text"
+    android:background="@android:color/transparent"
     android:padding="@dimen/dp_10">
 
     <ImageView
         android:id="@+id/detail_start"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:clickable="true"
-        android:contentDescription="Weather"
+        android:padding="@dimen/safe_padding"
         android:src="@drawable/ic_back"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,8 +38,10 @@
 
     <ImageView
         android:id="@+id/detail_end"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:padding="@dimen/safe_padding"
         android:src="@drawable/ic_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

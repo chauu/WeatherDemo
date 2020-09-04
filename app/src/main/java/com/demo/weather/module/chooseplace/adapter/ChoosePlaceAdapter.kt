@@ -1,4 +1,4 @@
-package com.demo.weather.module.place.adapter
+package com.demo.weather.module.chooseplace.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
