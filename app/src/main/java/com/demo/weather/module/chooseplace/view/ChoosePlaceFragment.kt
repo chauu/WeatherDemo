@@ -1,11 +1,13 @@
 package com.demo.weather.module.chooseplace.view
 
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.demo.weather.R
 import com.demo.weather.base.view.BaseLifeCycleFragment
 import com.demo.weather.databinding.FragmentListBinding
+import com.demo.weather.model.Place
 import com.demo.weather.module.chooseplace.adapter.ChoosePlaceAdapter
 import com.demo.weather.module.chooseplace.viewmodel.ChoosePlaceViewModel
 import kotlinx.android.synthetic.main.custom_bar.view.*
@@ -17,21 +19,26 @@ class ChoosePlaceFragment : BaseLifeCycleFragment<ChoosePlaceViewModel, Fragment
 
     private lateinit var mHeaderView : View
 
-    private val mPlaceList = arrayListOf(
-        "a","b","c","d","e"
-    )
-
     override fun initDataObserver() {
+        mViewModel.mPlaceData.observe(this, Observer { response ->
+            response?.let {
+                setPlaceList(response)
+            }
+        })
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_list
 
     override fun initView() {
         super.initView()
-        showSuccess()
         initAdapter()
         initHeaderView()
         initFab()
+    }
+
+    override fun initData() {
+        super.initData()
+        mViewModel.queryAllPlace()
     }
 
     private fun initHeaderView() {
@@ -51,9 +58,17 @@ class ChoosePlaceFragment : BaseLifeCycleFragment<ChoosePlaceViewModel, Fragment
     }
 
     private fun initAdapter() {
-        mAdapter = ChoosePlaceAdapter(R.layout.place_item, mPlaceList)
+        mAdapter = ChoosePlaceAdapter(R.layout.place_item, null)
         mRvArticle?.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         mRvArticle?.adapter = mAdapter
+        mAdapter.setOnItemChildClickListener { adapter, view, position ->
+            val place = mAdapter.getItem(position)
+            place?.let {
+                mViewModel.deletePlace(place)
+                mAdapter.notifyDataSetChanged()
+            }
+            true
+        }
         mAdapter.setEnableLoadMore(true)
     }
 
@@ -62,18 +77,7 @@ class ChoosePlaceFragment : BaseLifeCycleFragment<ChoosePlaceViewModel, Fragment
         fab_add?.visibility = View.VISIBLE
     }
 
-    private fun setPlaceList(placeList: List<String>){
-        if(placeList.isEmpty()){
-            mAdapter.loadMoreEnd()
-            return
-        }
-        if(mSrlRefresh.isRefreshing){
-            mSrlRefresh.isRefreshing = false
-            mAdapter.setNewData(placeList)
-            mAdapter.loadMoreComplete()
-            return
-        }
-        mAdapter.addData(placeList)
-        mAdapter.loadMoreComplete()
+    private fun setPlaceList(placeList: List<Place>){
+        mAdapter.setNewData(placeList)
     }
 }

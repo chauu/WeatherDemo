@@ -1,6 +1,7 @@
 package com.demo.weather.module.searchplace.view
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -9,8 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.demo.weather.R
 import com.demo.weather.base.view.BaseLifeCycleFragment
+import com.demo.weather.common.KeyBoardUtil.hideKeyboard
 import com.demo.weather.databinding.SearchPlaceFragmentBinding
-import com.demo.weather.module.chooseplace.model.Place
+import com.demo.weather.model.Place
 import com.demo.weather.module.searchplace.adapter.SearchPlaceAdapter
 import com.demo.weather.module.searchplace.viewmodel.SearchPlaceViewModel
 import kotlinx.android.synthetic.main.custom_bar.view.*
@@ -33,6 +35,14 @@ class SearchPlaceFragment : BaseLifeCycleFragment<SearchPlaceViewModel, SearchPl
         place_recycle.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         place_recycle.visibility = View.VISIBLE
         place_recycle.adapter = mAdapter
+        mAdapter.setOnItemClickListener { adapter, view, position ->
+            val place = mAdapter.getItem(position)
+            place?.let {
+                mViewModel.insertPlace(place)
+                hideKeyboard()
+                Navigation.findNavController(view).navigateUp()
+            }
+        }
     }
 
     private fun initHeaderView(){
