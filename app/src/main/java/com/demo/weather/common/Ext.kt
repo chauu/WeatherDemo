@@ -16,11 +16,10 @@ fun <T : BaseRepository> BaseViewModel<T>.initiateRequest(
     viewModelScope.launch {
         kotlin.runCatching {
             block()
-            Log.d("Ext","success")
         }.onSuccess {
             Log.d("Ext","onSuccess")
         }.onFailure {
-            Log.d("Ext","onFailure")
+            Log.d("Ext","onFailure ${it.printStackTrace()}" )
             NetExceptionHandle.handleException(it, loadState)
         }
     }

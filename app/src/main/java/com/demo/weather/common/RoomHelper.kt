@@ -5,7 +5,7 @@ import com.demo.weather.base.BaseApplication
 import com.demo.weather.common.state.State
 import com.demo.weather.common.state.StateType
 import com.demo.weather.model.Place
-import com.demo.weather.module.chooseplace.model.database.PlaceDataBase
+import com.demo.weather.module.addedplace.model.database.PlaceDataBase
 
 object RoomHelper {
     private val placeDataBase by lazy {
@@ -16,12 +16,16 @@ object RoomHelper {
         placeDataBase?.placeDao()
     }
 
-    suspend fun queryAllPlace(loadState: MutableLiveData<State>) : List<Place> {
-        val response = placeDao?.queryAllPlace()?.reversed()
+    suspend fun queryAllPlace(loadState: MutableLiveData<State>) : MutableList<Place> {
+        val response = placeDao?.queryAllPlace()?.toMutableList()
         if(response!!.isEmpty()) {
             loadState.postValue(State(StateType.SUCCESS))
         }
         return response
+    }
+
+    suspend fun queryFirstPlace(loadState: MutableLiveData<State>) : Place? {
+        return placeDao?.queryFirstPlace()
     }
 
     suspend fun insertPlace(place: Place) {

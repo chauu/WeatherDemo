@@ -17,6 +17,7 @@ android {
         targetSdkVersion rootAndroidId.targetSdkVersion
         versionCode rootAndroidId.versionCode
         versionName rootAndroidId.versionName
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,6 +61,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.0'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.0'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.6'
     support.each { k, v -> implementation v }
     kapt "androidx.room:room-compiler:2.2.5"
     testImplementation 'junit:junit:4.12'

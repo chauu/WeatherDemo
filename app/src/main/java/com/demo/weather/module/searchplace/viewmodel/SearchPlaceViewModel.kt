@@ -2,7 +2,6 @@ package com.demo.weather.module.searchplace.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.demo.weather.base.viewmodel.BaseViewModel
 import com.demo.weather.common.initiateRequest

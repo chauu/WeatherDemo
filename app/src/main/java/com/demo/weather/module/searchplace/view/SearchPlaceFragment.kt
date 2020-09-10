@@ -1,7 +1,6 @@
 package com.demo.weather.module.searchplace.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
@@ -85,8 +84,7 @@ class SearchPlaceFragment : BaseLifeCycleFragment<SearchPlaceViewModel, SearchPl
         })
     }
 
-    private fun setPlaceList(placeList: List<Place>) {
-        mAdapter.setNewData(placeList)
-        mAdapter.loadMoreComplete()
+    private fun setPlaceList(placeList: MutableList<Place>) {
+        mAdapter.setNewInstance(placeList)
     }
 }

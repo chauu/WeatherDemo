@@ -4,6 +4,6 @@ import com.demo.weather.R
 import com.demo.weather.base.view.BaseLifeCycleActivity
 import com.demo.weather.databinding.ActivityMainBinding
 
-class MainActivity : BaseLifeCycleActivity<MainViewModel, ActivityMainBinding>(){
+class MainActivity : BaseLifeCycleActivity<AppViewModel, ActivityMainBinding>(){
     override fun getLayoutId(): Int = R.layout.activity_main
 }

@@ -4,5 +4,5 @@ import com.demo.weather.model.Place
 
 data class SearchPlaceResponse(
     val status: String,
-    val places: List<Place>
+    val places: MutableList<Place>
 )

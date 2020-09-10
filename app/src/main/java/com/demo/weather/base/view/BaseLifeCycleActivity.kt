@@ -10,11 +10,15 @@ import com.demo.weather.common.Utils
 import com.demo.weather.common.callback.EmptyCallBack
 import com.demo.weather.common.callback.ErrorCallBack
 import com.demo.weather.common.callback.LoadingCallBack
+import com.demo.weather.common.getAppViewModel
 import com.demo.weather.common.state.State
 import com.demo.weather.common.state.StateType
+import com.demo.weather.module.main.AppViewModel
 import com.kingja.loadsir.callback.SuccessCallback
 
 abstract class BaseLifeCycleActivity<VM : BaseViewModel<*>, DB : ViewDataBinding> : BaseActivity<VM, DB>(){
+
+    val appViewModel: AppViewModel by lazy { getAppViewModel() }
 
     override fun initView() {
         showSuccess()
